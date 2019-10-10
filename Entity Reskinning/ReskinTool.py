@@ -9,6 +9,8 @@ green = (0, 255, 0)
 blue = (0, 0, 255)
 yellow = (255, 255, 0)
 
+colourDistance = 100
+
 originalFilename = 'Sample Image'
 
 originalImagePath = os.path.join('Images', originalFilename + '.jpg')
@@ -25,7 +27,7 @@ for i in range(imageWidth):
     for j in range(imageHeight):
         for n in range(3):
             pixelColour = originalImage.get_at((i, j))
-            if (pixelColour[0] > (pixelColour[1] + 100)) and (pixelColour[0] > (pixelColour[2] + 100)):
+            if (pixelColour[0] > (pixelColour[1] + colourDistance)) and (pixelColour[0] > (pixelColour[2] + colourDistance)):
                 if n != 2:
                     colourHolder = pixelColour[0]
                     pixelColour[0] = pixelColour[n + 1]
