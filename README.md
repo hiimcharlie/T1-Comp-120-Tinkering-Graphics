@@ -12,6 +12,8 @@ Lead Programmer -
 
 Contract #4 - Platformer Entity Reskinning
 Lead Programmer - Harry Donovan
+Photo by Magda Ehlers from Pexels
+
 
 Contract #5 - Colour Blindness User Interface Analysis Tool
 Lead Programmer - 
