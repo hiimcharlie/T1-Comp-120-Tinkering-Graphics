@@ -25,16 +25,21 @@ for i in range(imageWidth):
     for j in range(imageHeight):
         for n in range(3):
             pixelColour = originalImage.get_at((i, j))
-            if(n != 2):
-                colourHolder = pixelColour[0]
-                pixelColour[0] = pixelColour[n + 1]
-                pixelColour[n + 1] = colourHolder
-                if(n == 0):
-                    greenImage.set_at((i, j), pixelColour)
+            if (pixelColour[0] > (pixelColour[1] + 100)) and (pixelColour[0] > (pixelColour[2] + 100)):
+                if n != 2:
+                    colourHolder = pixelColour[0]
+                    pixelColour[0] = pixelColour[n + 1]
+                    pixelColour[n + 1] = colourHolder
+                    if n == 0 :
+                        greenImage.set_at((i, j), pixelColour)
+                    else:
+                        blueImage.set_at((i, j), pixelColour)
                 else:
-                    blueImage.set_at((i, j), pixelColour)
+                    pixelColour[1] = pixelColour[0]
+                    yellowImage.set_at((i, j), pixelColour)
             else:
-                pixelColour[1] = pixelColour[0]
+                greenImage.set_at((i, j), pixelColour)
+                blueImage.set_at((i, j), pixelColour)
                 yellowImage.set_at((i, j), pixelColour)
 
 greenFilename = os.path.join('Images', originalFilename + ' (green)' + '.png')
