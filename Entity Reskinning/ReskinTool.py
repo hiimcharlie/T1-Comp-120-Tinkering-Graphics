@@ -2,34 +2,46 @@ import os, pygame
 
 pygame.init()
 
-display_width = 1920
-display_height = 1080
-
-toolDisplay = pygame.display.set_mode((display_width, display_height))
+toolDisplay = pygame.display.set_mode((800, 600))
 
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
 yellow = (255, 255, 0)
 
-originalImagePath = os.path.join('Images', 'Red Boards.jpg')
+originalFilename = 'Sample Image'
+
+originalImagePath = os.path.join('Images', originalFilename + '.jpg')
 originalImage = pygame.image.load(originalImagePath).convert()
 
-for i in range(originalImage.get_width()):
-    for j in range(originalImage.get_height()):
-        pixelColour = originalImage.get_at((i, j))
-        # red to green
-        colourHolder = pixelColour[0]
-        pixelColour[0] = pixelColour[1]
-        pixelColour[1] = colourHolder
-        originalImage.set_at((i, j), pixelColour)
+imageWidth = originalImage.get_width()
+imageHeight = originalImage.get_height()
 
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+greenImage = pygame.Surface((imageWidth, imageHeight))
+blueImage = pygame.Surface((imageWidth, imageHeight))
+yellowImage = pygame.Surface((imageWidth, imageHeight))
 
-    toolDisplay.fill((0, 0, 0))
-    toolDisplay.blit(originalImage, (0, 0))
-    pygame.display.update()
+for i in range(imageWidth):
+    for j in range(imageHeight):
+        for n in range(3):
+            pixelColour = originalImage.get_at((i, j))
+            if(n != 2):
+                colourHolder = pixelColour[0]
+                pixelColour[0] = pixelColour[n + 1]
+                pixelColour[n + 1] = colourHolder
+                if(n == 0):
+                    greenImage.set_at((i, j), pixelColour)
+                else:
+                    blueImage.set_at((i, j), pixelColour)
+            else:
+                pixelColour[1] = pixelColour[0]
+                yellowImage.set_at((i, j), pixelColour)
+
+greenFilename = os.path.join('Images', originalFilename + ' (green)' + '.png')
+pygame.image.save(greenImage, greenFilename)
+
+blueFilename = os.path.join('Images', originalFilename + ' (blue)' + '.png')
+pygame.image.save(blueImage, blueFilename)
+
+yellowFilename = os.path.join('Images', originalFilename + ' (yellow)' + '.png')
+pygame.image.save(yellowImage, yellowFilename)
