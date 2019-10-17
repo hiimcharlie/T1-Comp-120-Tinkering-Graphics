@@ -23,9 +23,11 @@ originalImage = pygame.image.load(originalImagePath).convert()
 imageWidth = originalImage.get_width()
 imageHeight = originalImage.get_height()
 
-greenImage = pygame.Surface((imageWidth, imageHeight))
-blueImage = pygame.Surface((imageWidth, imageHeight))
-yellowImage = pygame.Surface((imageWidth, imageHeight))
+generatedImages = []
+generatedColours = ['green', 'blue', 'yellow']
+
+for i in range(3):
+    generatedImages.append(pygame.Surface((imageWidth, imageHeight)))
 
 for i in range(imageWidth):
     for j in range(imageHeight):
@@ -44,23 +46,15 @@ for i in range(imageWidth):
                     colourHolder = pixelColour[0]
                     pixelColour[0] = pixelColour[n + 1]
                     pixelColour[n + 1] = colourHolder
-                    if n == 0 :
-                        greenImage.set_at((i, j), pixelColour)
-                    else:
-                        blueImage.set_at((i, j), pixelColour)
+
+                    generatedImages[n].set_at((i, j), pixelColour)
+
                 else:
                     pixelColour[1] = pixelColour[0]
-                    yellowImage.set_at((i, j), pixelColour)
+                    generatedImages[2].set_at((i, j), pixelColour)
             else:
-                greenImage.set_at((i, j), pixelColour)
-                blueImage.set_at((i, j), pixelColour)
-                yellowImage.set_at((i, j), pixelColour)
+                generatedImages[n].set_at((i, j), pixelColour)
 
-greenFilename = os.path.join('Images', originalFilename + ' (green)' + '.png')
-pygame.image.save(greenImage, greenFilename)
-
-blueFilename = os.path.join('Images', originalFilename + ' (blue)' + '.png')
-pygame.image.save(blueImage, blueFilename)
-
-yellowFilename = os.path.join('Images', originalFilename + ' (yellow)' + '.png')
-pygame.image.save(yellowImage, yellowFilename)
+for i in range(3):
+    filename = os.path.join('Images', originalFilename + ' (' + generatedColours[i] + ')' + '.png')
+    pygame.image.save(generatedImages[i], filename)
